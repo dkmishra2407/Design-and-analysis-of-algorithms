@@ -90,6 +90,7 @@ int main() {
             dp1[0][i] = values[0];
         }
     }
+    
 
     for (int i = 1; i < n; i++) {
         for (int j = 0; j <= w; j++) {
