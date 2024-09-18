@@ -2,61 +2,52 @@
 #include <cmath>
 #include <iostream>
 
-class Solution {
-public:
-    std::vector<std::vector<std::string>> ans; // To store the final board configurations
+using namespace std;
 
-    // Function to check if a queen can be placed at (row, col)
-    bool place(std::vector<int>& s, int col, int row) {
-        for (int j = 0; j < row; j++) {
-            // Check for column and diagonal conflicts
-            if (s[j] == col || abs(s[j] - col) == abs(j - row)) {
-                return false;
-            }
-        }
-        return true;
-    }
+vector<vector<string>> ans;
 
-    // Backtracking function to place queens
-    void nqueen(std::vector<int>& s, int n, int row) {
-        if (row == n) {
-            // A valid configuration is found, convert it to the board format
-            std::vector<std::string> board(n, std::string(n, '.'));
-            for (int i = 0; i < n; i++) {
-                board[i][s[i]] = 'Q'; // Place the queen
-            }
-            ans.push_back(board); // Store the valid configuration
-            return;
-        }
-
-        for (int col = 0; col < n; col++) {
-            if (place(s, col, row)) {
-                s[row] = col; // Place the queen
-                nqueen(s, n, row + 1); // Move to the next row
-                // No need to reset s[row] because it will be overwritten in the next iteration
-            }
+bool place(const vector<int>& s, int col, int row) {
+    for (int j = 0; j < row; j++) {
+        if (s[j] == col || abs(s[j] - col) == abs(j - row)) {
+            return false;
         }
     }
+    return true;
+}
 
-    // Main function to initiate the N-Queens solving
-    std::vector<std::vector<std::string>> solveNQueens(int n) {
-        std::vector<int> store_col(n, 0); // To store the column positions of queens
-        nqueen(store_col, n, 0); // Start placing queens from row 0
-        return ans; // Return all valid configurations
+void nqueen(vector<int>& s, int n, int row) {
+    if (row == n) {
+        vector<string> board(n, string(n, '.'));
+        for (int i = 0; i < n; i++) {
+            board[i][s[i]] = 'Q';
+        }
+        ans.push_back(board);
+        return;
     }
-};
 
-// Example usage
+    for (int col = 0; col < n; col++) {
+        if (place(s, col, row)) {
+            s[row] = col;
+            nqueen(s, n, row + 1);
+        }
+    }
+}
+
+vector<vector<string>> solveNQueens(int n) {
+    vector<int> store_col(n, 0);
+    nqueen(store_col, n, 0);
+    return ans;
+}
+
 int main() {
-    Solution solution;
-    int n = 8; // Change this value to test with different sizes
-    auto results = solution.solveNQueens(n);
+    int n = 8;
+    auto results = solveNQueens(n);
     
     for (const auto& board : results) {
         for (const auto& row : board) {
-            std::cout << row << std::endl;
+            cout << row << endl;
         }
-        std::cout << std::endl; // Separate different solutions
+        cout << endl;
     }
 
     return 0;
@@ -65,84 +56,67 @@ int main() {
 
 // SOLUTION 2
 
+// #include <vector>
+// #include <cmath>
+// #include <iostream>
 
-// void addSolution ( vector<vector<int> > &ans, vector < vector < int> > &board, int n ){
+// using namespace std;
 
-// 	vector<int> temp;
+// vector<vector<string>> ans; // To store the final board configurations
 
-// 	for ( int i = 0; i<n ; i++){
-// 		for ( int j = 0; j<n ; j++){
-// 			temp.push_back(board[i][j]);
-// 		}
-// 	}
-// 	ans.push_back(temp);
-// } 
-
-// bool isSafe ( int row , int col , vector<vector<int> > &board , int n){
-
-// 	int x = row ;
-// 	int y = col ;
-
-
-
-// 	while ( y>=0){
-// 		if( board [x][y] == 1)
-// 			return false;
-// 		y--;
-// 	}
-
-// 	x = row ;
-// 	y = col ;
-	
-// 	while ( x>= 0 && y>=0){
-// 		if( board [x][y] == 1)
-// 			return false;
-	
-// 		y--;
-// 		x--;
-// 	}
-
-// 	x = row ;
-// 	y = col ;
-
-// 	while ( x<n && y>=0 ){
-// 		if( board [x][y] == 1)
-// 			return false;
-	
-// 		y--;
-// 		x++;
-// 	}
-
-// 	return true;
+// // Function to check if a queen can be placed at (row, col)
+// bool place(const vector<int>& s, int col, int row) {
+//     for (int j = 0; j < row; j++) {
+//         // Check for column and diagonal conflicts
+//         if (s[j] == col || abs(s[j] - col) == abs(j - row)) {
+//             return false; // Conflict found
+//         }
+//     }
+//     return true; // No conflicts
 // }
 
-// void solve(int col,vector<vector<int> > &ans,vector<vector<int> > &board , int n){
+// // Backtracking function to place queens
+// void nqueen(vector<int>& s, int n, int row) {
+//     if (row == n) {
+//         // A valid configuration is found, convert it to the board format
+//         vector<string> board(n, string(n, '.'));
+//         for (int i = 0; i < n; i++) {
+//             board[i][s[i]] = 'Q'; // Place the queen
+//         }
+//         ans.push_back(board); // Store the valid configuration
+//         return; // Backtrack to explore other configurations
+//     }
 
-
-// 	if( col == n ){
-// 		addSolution (  ans , board, n);
-// 		return ;
-// 	}
-
-	
-
-// 	for ( int row = 0 ; row < n ; row++){
-// 		if( isSafe (row , col ,board , n)){
-// 			// place queen if safe
-// 			board[row][col] = 1;
-// 			solve(col+1 , ans , board , n);
-// 			board[row][col] = 0;
-// 		}
-// 	}
+//     for (int col = 0; col < n; col++) {
+//         if (place(s, col, row)) { // Check if placing queen is valid
+//             s[row] = col; // Place the queen at (row, col)
+//             nqueen(s, n, row + 1); // Move to the next row (backtracking step)
+//             // After returning from recursion, we backtrack:
+//             // We do not need to reset s[row] because it will be overwritten in the next iteration
+//         }
+//         // If placing the queen at (row, col) didn't lead to a solution,
+//         // the loop continues to try the next column.
+//     }
 // }
 
-// vector<vector<int>> nQueens(int n)
-// {
+// // Main function to initiate the N-Queens solving
+// vector<vector<string>> solveNQueens(int n) {
+//     vector<int> store_col(n, 0); // To store the column positions of queens
+//     nqueen(store_col, n, 0); // Start placing queens from row 0
+//     return ans; // Return all valid configurations
+// }
 
-	
-// 	vector < vector < int> > board (n , vector <int> ( n , 0));
-// 	vector < vector < int> > ans;
+// // Example usage
+// int main() {
+//     int n = 8; // Change this value to test with different sizes
+//     auto results = solveNQueens(n);
+    
+//     for (const auto& board : results) {
+//         for (const auto& row : board) {
+//             cout << row << endl;
+//         }
+//         cout << endl; // Separate different solutions
+//     }
 
-// 	solve( 0 , ans , board , n);
-// 	return ans;
+//     return 0;
 // }
