@@ -4,6 +4,7 @@ typedef long long ll;
 
 #define n 4
 
+//  FIND THE MINIMUM EDGE
 int findMinEdge(int i, vector<vector<int>> &matrix) {
     int mini = INT_MAX;
     for (int j = 0; j < n; j++) {
@@ -13,6 +14,7 @@ int findMinEdge(int i, vector<vector<int>> &matrix) {
     }
     return mini;
 }
+
 
 int calculateLowerBound(int currentBound, vector<vector<int>> &matrix, vector<int> &visited) {
     int bound = currentBound;
@@ -26,7 +28,9 @@ int calculateLowerBound(int currentBound, vector<vector<int>> &matrix, vector<in
 
 void tspByBranchBound(vector<vector<int>> &matrix, vector<int> &currpath, vector<int> &finalpath,
                       vector<int> &visited, int &finalcost, int currentcost, int currentbound, int currentlevel) {
+                        // IF YOU REACHED TO THE LAST LEVEL THEN CHECK IT CAN COME TO START VERTEX
     if (currentlevel == n) {
+        // IF MATRIX IS NOT 
         if (matrix[currpath[currentlevel - 1]][currpath[0]] != 0) {
             int finalcostsolution = currentcost + matrix[currpath[currentlevel - 1]][currpath[0]];
             if (finalcostsolution < finalcost) {
@@ -67,6 +71,7 @@ void solveTSP(vector<vector<int>> &matrix) {
     int currentBound = 0;
 
     visited[0] = 1;
+
     currpath[0] = 0;
 
     for (int i = 0; i < n; i++) {

@@ -1,0 +1,1 @@
+{"name":"Local: bell","url":"c:\\Users\\Admin\\Desktop\\Design-and-analysis-of-algorithms\\A1\\bell.cpp","tests":[{"id":1731470829004,"input":"4\n0 1 1\n0 2 4\n1 2 2\n1 3 6\n0","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\Users\\Admin\\Desktop\\Design-and-analysis-of-algorithms\\A1\\bell.cpp","group":"local","local":true}
