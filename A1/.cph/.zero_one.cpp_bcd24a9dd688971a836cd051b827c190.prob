@@ -1,0 +1,1 @@
+{"name":"Local: zero_one","url":"c:\\Users\\Admin\\Desktop\\Design-and-analysis-of-algorithms\\A1\\zero_one.cpp","tests":[{"id":1731527340996,"input":"1\n3\n60 10 \n100 20 \n120 30\n50","output":""}],"interactive":false,"memoryLimit":1024,"timeLimit":3000,"srcPath":"c:\\Users\\Admin\\Desktop\\Design-and-analysis-of-algorithms\\A1\\zero_one.cpp","group":"local","local":true}

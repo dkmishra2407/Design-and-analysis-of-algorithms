@@ -2,27 +2,31 @@
 using namespace std;
 typedef long long ll;
 
-vector<int> subseq(vector<int>& ans, int n, int sum, int fsum, int i, vector<int>& arr) {
+void subseq(vector<int>& ans, int n, int sum, int fsum, int i, vector<int>& arr) {
+    // Base case: if the current sum equals the target, print the subsequence
     if (sum == fsum) {
-        return arr;
+        cout << "Subsequence with the required sum: ";
+        for (int x : arr) {
+            cout << x << " ";
+        }
+        cout << endl;
+        return; // Continue to explore other subsequences
     }
 
     if (i >= n) {
-        return {};
+        return; // Stop if we reach the end of the list
     }
 
+    // Include the current element in the subsequence if it doesn't exceed the sum
     arr.push_back(ans[i]);
     if (sum + ans[i] <= fsum) {
-        vector<int> take = subseq(ans, n, sum + ans[i], fsum, i + 1, arr);
-        if (!take.empty()) {  
-            return take;
-        }
+        subseq(ans, n, sum + ans[i], fsum, i + 1, arr);
     }
     // Backtrack: remove the current element
     arr.pop_back();
 
     // Exclude the current element from the subsequence and continue
-    return subseq(ans, n, sum, fsum, i + 1, arr);
+    subseq(ans, n, sum, fsum, i + 1, arr);
 }
 
 int main() {
@@ -41,17 +45,8 @@ int main() {
     cin >> fsum;
 
     vector<int> arr;
-    vector<int> result = subseq(ans, n, 0, fsum, 0, arr);
-
-    if (!result.empty()) {
-        cout << "Subsequence with the required sum: ";
-        for (int x : result) {
-            cout << x << " ";
-        }
-        cout << endl;
-    } else {
-        cout << "No subsequence found with the required sum." << endl;
-    }
+    cout << "All subsequences with the required sum:" << endl;
+    subseq(ans, n, 0, fsum, 0, arr);
 
     return 0;
 }
